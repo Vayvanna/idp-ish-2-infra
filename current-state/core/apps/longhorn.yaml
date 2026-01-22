@@ -17,6 +17,8 @@ spec:
           defaultReplicaCount: 2
           replicaSoftAntiAffinity: true
           storageOverProvisioningPercentage: 200
+        preUpgradeJob:
+          enabled: false
   destination:
     name: workloads-cluster  # The name you gave it in the CLI
     namespace: longhorn-system
