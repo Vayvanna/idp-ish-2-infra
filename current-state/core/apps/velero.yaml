@@ -11,11 +11,6 @@ spec:
     targetRevision: 8.1.0 # This chart version installs Velero v1.14+
     helm:
       values: |
-        upgradeCRDs: true
-        kubectl:
-          image:
-            repository: docker.io/bitnamilegacy/kubectl
-            tag: 1.31.5
         configuration:
           volumeSnapshotLocation: []
           backupStorageLocation:
