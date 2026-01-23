@@ -11,7 +11,7 @@ spec:
     targetRevision: 7.1.0 # This chart version installs Velero v1.14+
     helm:
       values: |
-        upgradeCRDs: true
+        upgradeCRDs: false
         kubectl:
           image:
             repository: registry.k8s.io/kubectl
