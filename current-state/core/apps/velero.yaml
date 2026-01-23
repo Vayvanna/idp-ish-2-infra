@@ -13,7 +13,8 @@ spec:
       values: |
         kubectl:
           image:
-            repository: docker.io/bitnamilegacy/kubectl
+            repository=registry.k8s.io/kubectl
+            tag=v1.34.1
         configuration:
           volumeSnapshotLocation: []
           backupStorageLocation:
