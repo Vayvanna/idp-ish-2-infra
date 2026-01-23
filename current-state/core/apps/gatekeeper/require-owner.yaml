@@ -1,9 +1,9 @@
-apiVersion: constraints.gatekeeper.sh/v1beta1
+apiVersion: constraints.gatekeeper.sh/v1
 kind: K8sRequiredLabels
 metadata:
   name: ns-must-have-owner
   annotations:
-    argocd.argoproj.io/sync-wave: "4" # Lower numbers go first
+    argocd.argoproj.io/sync-wave: "1" # Lower numbers go first
 spec:
   enforcementAction: dryrun # by default I think its deny.
   match:

@@ -4,7 +4,7 @@ metadata:
   name: gatekeeper
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "1" # Lower numbers go first
+    argocd.argoproj.io/sync-wave: "-10" # Lower numbers go first
 spec:
   project: default
   source:
