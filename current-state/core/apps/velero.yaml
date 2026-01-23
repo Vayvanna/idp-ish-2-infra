@@ -14,7 +14,7 @@ spec:
         upgradeCRDs: true
         kubectl:
           image:
-            repository: registry.k8s.io/kubectl
+            repository: docker.io/bitnamilegacy/kubectl
             tag: 1.31.5
         configuration:
           volumeSnapshotLocation: []
