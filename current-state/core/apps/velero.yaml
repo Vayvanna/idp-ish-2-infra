@@ -5,36 +5,39 @@ metadata:
   namespace: argocd
 spec:
   project: default
-  source:
-    chart: velero
-    repoURL: https://vmware-tanzu.github.io/helm-charts
-    targetRevision: 8.1.0 # This chart version installs Velero v1.14+
-    helm:
-      values: |
-        kubectl:
-          image:
-            repository: docker.io/bitnamilegacy/kubectl
-            tag: latest
-        configuration:
-          volumeSnapshotLocation: []
-          backupStorageLocation:
-            - name: default
-              provider: aws
-              bucket: idp-ish-2-velero-backup
-              config:
-                region: eu-west-3 # Double check your S3 region!
-        credentials:
-          useSecret: true
-          existingSecret: cloud-credentials
-        initContainers:
-          - name: velero-plugin-for-aws
-            image: velero/velero-plugin-for-aws:v1.10.0
-            volumeMounts:
-              - mountPath: /target
-                name: plugins
-        # Security: Deploy node-agent to allow backing up PV data (Longhorn)
-        deployNodeAgent: true
-        snapshotsEnabled: false
+  sources:
+    - chart: velero
+      repoURL: https://vmware-tanzu.github.io/helm-charts
+      targetRevision: 8.1.0 # This chart version installs Velero v1.14+
+      helm:
+        values: |
+          kubectl:
+            image:
+              repository: docker.io/bitnamilegacy/kubectl
+              tag: latest
+          configuration:
+            volumeSnapshotLocation: []
+            backupStorageLocation:
+              - name: default
+                provider: aws
+                bucket: idp-ish-2-velero-backup
+                config:
+                  region: eu-west-3 # Double check your S3 region!
+          credentials:
+            useSecret: true
+            existingSecret: cloud-credentials
+          initContainers:
+            - name: velero-plugin-for-aws
+              image: velero/velero-plugin-for-aws:v1.10.0
+              volumeMounts:
+                - mountPath: /target
+                  name: plugins
+          # Security: Deploy node-agent to allow backing up PV data (Longhorn)
+          deployNodeAgent: true
+          snapshotsEnabled: false
+    - repoURL: https://github.com/Vayvanna/idp-ish-2-infra
+      path: current-state/core/apps/cert-manager
+      targetRevision: HEAD
   destination:
     name: workloads-cluster
     namespace: velero
