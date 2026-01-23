@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gatekeeper-policies
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/vayvanna/idp-ish-2-infra/ # Point to your infra repo
+    targetRevision: HEAD
+    path: current-state/core/apps/gatekeeper # The folder we're about to create
+  destination:
+    name: workloads-cluster
+    namespace: gatekeeper-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
