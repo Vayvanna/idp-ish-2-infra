@@ -11,11 +11,11 @@ spec:
     targetRevision: 7.1.0 # This chart version installs Velero v1.14+
     helm:
       values: |
-        upgradeCRDs: false
+        upgradeCRDs: true
         kubectl:
           image:
             repository: registry.k8s.io/kubectl
-            tag: v1.34.1
+            tag: v1.31.5
         configuration:
           volumeSnapshotLocation: []
           backupStorageLocation:
