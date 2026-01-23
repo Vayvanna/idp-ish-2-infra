@@ -3,6 +3,7 @@ kind: K8sRequiredLabels
 metadata:
   name: ns-must-have-owner
 spec:
+  enforcementAction: dryrun # by default I think its deny.
   match:
     kinds:
       - apiGroups: [""]
