@@ -25,7 +25,7 @@ spec:
             ownerEmail: {{ownerEmail}}
       destination:
         name: workloads-cluster
-        namespace: {{teamName}}
+        namespace: "{{teamName}}"
       syncPolicy:
         automated: { prune: true, selfHeal: true }
         syncOptions: [CreateNamespace=true]
