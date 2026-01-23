@@ -1,0 +1,47 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gatekeeper
+  namespace: argocd
+spec:
+  project: default
+  source:
+    chart: gatekeeper
+    repoURL: https://open-policy-agent.github.io/gatekeeper/charts
+    targetRevision: 3.14.0 # Using stable instead of beta for your core IDP
+    helm:
+      values: |
+        replicas: 1 # For a small/single-node K3s, 3 replicas is overkill
+        auditInterval: 300 # Run audit every 5 mins to save CPU
+        
+        # Security: Enable K8s Native Validation (CEL)
+        enableK8sNativeValidation: true 
+        
+        # Resources: Lean settings for your k3s environment
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 256Mi
+            
+        # Ensure it doesn't block its own namespace
+        controllerManager:
+          exemptNamespaces:
+            - gatekeeper-system
+            - kube-system
+            - kube-public
+            - kube-node-lease
+            - argocd
+            - velero # Don't let OPA break your backup system!
+            - cert-manager
+            - longhorn-system
+  destination:
+    name: workloads-cluster
+    namespace: gatekeeper-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    createNamespace: true
