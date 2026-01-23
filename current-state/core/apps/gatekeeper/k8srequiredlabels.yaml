@@ -15,7 +15,7 @@ spec:
               type: array
               items: { type: string }
   targets:
-    - target: admission.gatekeeper.sh
+    - target: admission.k8s.gatekeeper.sh
       rego: |
         package k8srequiredlabels
         violation[{"msg": msg}] {
