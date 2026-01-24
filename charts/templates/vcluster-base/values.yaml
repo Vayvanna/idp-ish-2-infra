@@ -1,18 +1,34 @@
 vcluster:
-  image:
-      repository: ghcr.io/loft-sh/vcluster
-      tag: 0.22.3
+  # 1. Distro Configuration
   controlPlane:
     distro:
       k3s:
         enabled: true
-        serviceCIDR: "10.96.0.0/12"
+        # In this schema version, k3s flags must go into extraArgs 
+        # because serviceCIDR is not a top-level property here.
+        extraArgs:
+          - "--service-cidr=10.96.0.0/12"
+    
+    # 2. Image and Persistence
     statefulSet:
+      image:
+        repository: "loft-sh/vcluster-oss" # Using OSS as discussed
+        tag: "0.22.3"
       persistence:
         volumeClaim:
           enabled: true
           size: 5Gi
+
+  # 3. Networking & Sync (Mapped to your schema)
   sync:
     toHost:
       services:
         enabled: true
+  
+  proxy:
+    extraSANs:
+      - "{{ .Values.appName }}.{{ .Values.teamName }}.workloads.example.com"
+
+# Keep these flat at the bottom for your custom ingress.yaml template
+ingress:
+  enabled: true
