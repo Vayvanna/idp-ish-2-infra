@@ -3,10 +3,6 @@ vcluster:
     distro:
       k3s:
         enabled: true
-        # serviceCIDR moved here for the virtual k3s
-        env:
-          - name: VCLUSTER_SERVICE_CIDR
-            value: "10.96.0.0/12"
     proxy:
       extraSANs:
         - "preview-env.team-alpha.workloads.example.com"
@@ -18,26 +14,17 @@ vcluster:
           enabled: true
           size: 5Gi
 
-  # In newer versions, networking.serviceCIDR at the root is deprecated/removed
-  # and sync.ingresses has been restructured.
+  # Schema fix: networking.advanced doesn't take 'enabled'
+  # Just use the object if you need to define specific CIDRs
   networking:
-    advanced:
+    serviceCIDR: "10.96.0.0/12"
+
+  # Schema fix: sync uses direct mapping now
+  sync:
+    ingresses:
       enabled: true
 
-  sync:
-    fromHost:
-      ingresses:
-        enabled: true
-    toHost:
-      ingresses:
-        enabled: true
-
-  # These moved under the 'exportKubeConfig' object which is often now 
-  # handled by the CLI, but if used in Helm:
-  external:
-    enabled: true
-
-# Custom variables (kept at top level)
+# Custom variables (Top Level)
 teamName: "team-alpha"
 appName: "preview-env"
 ingress:
