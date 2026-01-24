@@ -1,8 +1,12 @@
 vcluster:
+  image:
+      repository: ghcr.io/loft-sh/vcluster
+      tag: 0.22.3
   controlPlane:
     distro:
       k3s:
         enabled: true
+        serviceCIDR: "10.96.0.0/12"
     statefulSet:
       persistence:
         volumeClaim:
