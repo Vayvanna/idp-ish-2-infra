@@ -16,13 +16,13 @@ vcluster:
 
   # Schema fix: networking.advanced doesn't take 'enabled'
   # Just use the object if you need to define specific CIDRs
-  networking:
-    serviceCIDR: "10.96.0.0/12"
+networking:
+  serviceCIDR: "10.96.0.0/12"
 
-  # Schema fix: sync uses direct mapping now
-  sync:
-    ingresses:
-      enabled: true
+# Schema fix: sync uses direct mapping now
+sync:
+  ingresses:
+    enabled: true
 
 # Custom variables (Top Level)
 teamName: "team-alpha"
