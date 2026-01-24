@@ -1,17 +1,32 @@
-# v0.30.4 Schema - Staying on K3s to match your existing disk
-controlPlane:
-  distro:
-    k3s:
-      enabled: true
-  statefulSet:
-    persistence:
-      volumeClaim:
+vcluster:  # v0.30.4 Schema - Staying on K3s to match your existing disk
+  controlPlane:
+    proxy:
+      extraSANs:
+        - "preview-env.team-alpha.workloads.example.com"
+        - "192.168.44.200"
+        - "192.168.44.201"
+    distro:
+      k3s:
         enabled: true
-        size: 5Gi
+    statefulSet:
+      persistence:
+        volumeClaim:
+          enabled: true
+          size: 5Gi
 
-# This is the official v0.30 way to force the CIDR
-networking:
-  serviceCIDR: "10.96.0.0/12"
+  # This is the official v0.30 way to force the CIDR
+  networking:
+    serviceCIDR: "10.96.0.0/12"
+
+  exportKubeConfig:
+    context: "my-vcluster-context"
+
+  external:
+    enabled: true
+
+  sync:
+    ingresses:
+      enabled: true
 
 # Custom variables for your template
 teamName: "team-alpha"
