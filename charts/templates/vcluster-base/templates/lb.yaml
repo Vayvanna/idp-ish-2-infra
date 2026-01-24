@@ -1,15 +1,17 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: vcluster-loadbalancer
-  namespace: {{ .Release.Namespace }}
+  name: team-alpha-lb
+  namespace: team-alpha
 spec:
+  type: LoadBalancer
   selector:
     app: vcluster
-    release: {{ .Release.Name }}
+    release: team-alpha-preview-env
   ports:
     - name: https
       port: 443
-      targetPort: 8443
-      protocol: TCP
-  type: LoadBalancer
+      targetPort: 8443   # vCluster binary listens here
+    - name: kubelet
+      port: 10250
+      targetPort: 8443   # Internal vCluster proxy handles this too
