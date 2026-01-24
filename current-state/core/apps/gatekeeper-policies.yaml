@@ -8,7 +8,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/vayvanna/idp-ish-2-infra/ # Point to your infra repo
+    repoURL: https://github.com/Vayvanna/idp-ish-2-infra/ # Point to your infra repo
     targetRevision: HEAD
     path: current-state/core/apps/gatekeeper # The folder we're about to create
   destination:

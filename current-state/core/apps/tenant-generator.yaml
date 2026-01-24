@@ -6,7 +6,7 @@ metadata:
 spec:
   generators:
     - git:
-        repoURL: https://github.com/vayvanna/idp-ish-2-infra.git
+        repoURL: https://github.com/Vayvanna/idp-ish-2-infra.git
         revision: HEAD
         files:
           - path: "current-state/workloads/tenants/*.yaml" # Watches your UI dropzone
@@ -16,7 +16,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: https://github.com/vayvanna/idp-ish-2-infra.git
+        repoURL: https://github.com/Vayvanna/idp-ish-2-infra.git
         targetRevision: HEAD
         path: charts/templates/tenant-base
         helm:
