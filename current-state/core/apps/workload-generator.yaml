@@ -26,13 +26,8 @@ spec:
           values: |
             teamName: "{{teamName}}"
             appName: "{{appName}}"
-            vcluster:
-              controlPlane:
-                statefulSet:
-                  persistence:
-                    volumeClaim:
-                      enabled: {{ if .config.persistence }}{{ .config.persistence }}{{ else }}true{{ end }}
-                      size: "{{ .config.size | default "5Gi" }}"
+            persistenceEnabled: {{config.persistence}}
+            storageSize: "{{config.size}}"
       destination:
         name: workloads-cluster
         # Crucial: Deploy the workload INTO the team's specific namespace
