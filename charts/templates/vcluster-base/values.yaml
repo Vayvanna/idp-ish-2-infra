@@ -1,18 +1,17 @@
 vcluster:
-  controlPlane:
-    distro:
-      k3s:
-        enabled: true
-    
-    statefulSet:
-      image:
-        repository: "loft-sh/vcluster-oss"
-        tag: "0.22.3"
-      persistence:
-        volumeClaim:
-          enabled: true
-          size: 5Gi
+  # No distro section = defaults to k0s
+  # No sync section = defaults to minimal safe syncing
+  # No proxy section = uses default internal certs
 
-# Your custom property for the ingress.yaml in /templates
+  statefulSet:
+    image:
+      repository: "loft-sh/vcluster-oss"
+      tag: "0.22.3"
+    persistence:
+      volumeClaim:
+        enabled: true
+        size: 5Gi
+
+# Keeping your custom ingress flag so your template doesn't break
 ingress:
   enabled: true
