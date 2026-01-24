@@ -1,11 +1,39 @@
-vcluster:
+ vcluster:
+  sync:
+    toHost:
+      ingresses:
+        enabled: false
+    fromHost:
+      nodes:
+        enabled: false
+
   controlPlane:
+    distro:
+      k3s:
+        enabled: true
+        image:
+          repository: rancher/k3s
+          tag: v1.31.1-k3s1
     statefulSet:
       persistence:
         volumeClaim:
           enabled: true
           size: 5Gi
+    service:
+      enabled: true
+    ingress:
+      enabled: false
+    coredns:
+      enabled: true
+      deployment:
+        replicas: 1
+      service:
+        spec:
+          type: ClusterIP
 
-# Your custom property for your ingress.yaml template
-ingress:
-  enabled: true
+
+  rbac:
+    role:
+      enabled: true
+    clusterRole:
+      enabled: auto
