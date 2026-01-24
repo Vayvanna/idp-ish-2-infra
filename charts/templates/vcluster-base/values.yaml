@@ -14,7 +14,7 @@ controlPlane:
 # This stays at the root or under networking in some versions, 
 # but per your 'show values', controlPlane.proxy is the standard.
 # However, if not in show values, check if it moved to networking.
-controlPlane:
+# controlPlane:
   proxy:
     extraSANs:
       - "{{ .Values.appName }}.{{ .Values.teamName }}.workloads.example.com"
