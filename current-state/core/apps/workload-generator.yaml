@@ -34,4 +34,4 @@ spec:
         namespace: '{{teamName}}'
       syncPolicy:
         automated: { prune: true, selfHeal: true }
-        syncOptions: [CreateNamespace=false] # Namespace should already exist!
+        syncOptions: [CreateNamespace=true] # Namespace should already exist!
