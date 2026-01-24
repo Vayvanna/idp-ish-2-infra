@@ -1,24 +1,19 @@
-# v0.30 consolidated schema
+# v0.30.4 Schema - Staying on K3s to match your existing disk
 controlPlane:
   distro:
-    k8s:
+    k3s:
       enabled: true
-      # This ensures we use the latest K8s 1.34 logic
-      image:
-        tag: "v1.34.0"
-  
   statefulSet:
     persistence:
       volumeClaim:
         enabled: true
         size: 5Gi
 
-# Networking: We explicitly tell the syncer your host's range
-# to kill the 10.43.x.x ghost forever.
+# This is the official v0.30 way to force the CIDR
 networking:
   serviceCIDR: "10.96.0.0/12"
 
-# Your custom fields for your UI/Template project
+# Custom variables for your template
 teamName: "team-alpha"
 appName: "preview-env"
 ingress:
