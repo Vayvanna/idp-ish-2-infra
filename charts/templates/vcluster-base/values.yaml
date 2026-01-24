@@ -1,22 +1,17 @@
-teamName: "team-alpha"
-appName: "preview-env"
-
 vcluster:
   controlPlane:
     distro:
       k3s:
         enabled: true
-        # REMOVED extraArgs from here to prevent the "IP family" crash
+        # We hardcode it here so K3s CANNOT choose 10.43
+        extraArgs:
+          - "--service-cidr=10.96.0.0/12"
+          - "--bind-address=0.0.0.0"
     
     statefulSet:
       image:
         repository: "loft-sh/vcluster-oss"
         tag: "0.22.3"
-      # We pass the CIDR via ENV. vCluster uses this to configure 
-      # the host-check and the internal K3s startup correctly.
-      env:
-        - name: "VCLUSTER_SERVICE_CIDR"
-          value: "10.96.0.0/12"
       persistence:
         volumeClaim:
           enabled: true
@@ -25,6 +20,11 @@ vcluster:
     proxy:
       extraSANs:
         - "preview-env.team-alpha.workloads.example.com"
+
+  # THIS IS THE CRITICAL PART
+  # We pass the flag to the syncer binary itself
+  extraArgs:
+    - "--service-cidr=10.96.0.0/12"
 
   sync:
     toHost:
