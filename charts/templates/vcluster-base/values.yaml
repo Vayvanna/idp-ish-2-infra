@@ -1,34 +1,33 @@
 vcluster:
-  # 1. Distro Configuration
   controlPlane:
+    # 1. Distro is under controlPlane
     distro:
       k3s:
         enabled: true
-        # In this schema version, k3s flags must go into extraArgs 
-        # because serviceCIDR is not a top-level property here.
         extraArgs:
           - "--service-cidr=10.96.0.0/12"
     
-    # 2. Image and Persistence
+    # 2. StatefulSet (image/persistence) is under controlPlane
     statefulSet:
       image:
-        repository: "loft-sh/vcluster-oss" # Using OSS as discussed
+        repository: "loft-sh/vcluster-oss"
         tag: "0.22.3"
       persistence:
         volumeClaim:
           enabled: true
           size: 5Gi
 
-  # 3. Networking & Sync (Mapped to your schema)
+    # 3. Proxy is INSIDE controlPlane (This was the error!)
+    proxy:
+      extraSANs:
+        - "preview-env.team-alpha.workloads.example.com"
+
+  # 4. Sync is a root property under vcluster (Sibling to controlPlane)
   sync:
     toHost:
       services:
         enabled: true
-  
-  proxy:
-    extraSANs:
-      - "{{ .Values.appName }}.{{ .Values.teamName }}.workloads.example.com"
 
-# Keep these flat at the bottom for your custom ingress.yaml template
+# 5. Your custom properties for the ingress.yaml in /templates
 ingress:
   enabled: true
