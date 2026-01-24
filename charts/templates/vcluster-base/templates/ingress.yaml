@@ -28,4 +28,4 @@ spec:
                 # vCluster services are named after the release by default
                 name: {{ .Release.Name }} 
                 port:
-                  number: 443
+                  number: 8443
