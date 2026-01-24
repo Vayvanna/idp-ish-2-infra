@@ -26,9 +26,13 @@ spec:
           values: |
             teamName: "{{teamName}}"
             appName: "{{appName}}"
-            # We use indent 2 because these should be top-level keys 
-            # within the values passed to the chart.
-            {{- config | toYaml | nindent 12 }}
+            vcluster:
+              controlPlane:
+                statefulSet:
+                  persistence:
+                    volumeClaim:
+                      enabled: {{ if .config.persistence }}{{ .config.persistence }}{{ else }}true{{ end }}
+                      size: "{{ .config.size | default "5Gi" }}"
       destination:
         name: workloads-cluster
         # Crucial: Deploy the workload INTO the team's specific namespace
