@@ -1,39 +1,25 @@
- vcluster:
-  sync:
-    toHost:
-      ingresses:
-        enabled: false
-    fromHost:
-      nodes:
-        enabled: false
-
-  controlPlane:
-    distro:
-      k3s:
+# v0.30 consolidated schema
+controlPlane:
+  distro:
+    k8s:
+      enabled: true
+      # This ensures we use the latest K8s 1.34 logic
+      image:
+        tag: "v1.34.0"
+  
+  statefulSet:
+    persistence:
+      volumeClaim:
         enabled: true
-        image:
-          repository: rancher/k3s
-          tag: v1.31.1-k3s1
-    statefulSet:
-      persistence:
-        volumeClaim:
-          enabled: true
-          size: 5Gi
-    service:
-      enabled: true
-    ingress:
-      enabled: false
-    coredns:
-      enabled: true
-      deployment:
-        replicas: 1
-      service:
-        spec:
-          type: ClusterIP
+        size: 5Gi
 
+# Networking: We explicitly tell the syncer your host's range
+# to kill the 10.43.x.x ghost forever.
+networking:
+  serviceCIDR: "10.96.0.0/12"
 
-  rbac:
-    role:
-      enabled: true
-    clusterRole:
-      enabled: auto
+# Your custom fields for your UI/Template project
+teamName: "team-alpha"
+appName: "preview-env"
+ingress:
+  enabled: true

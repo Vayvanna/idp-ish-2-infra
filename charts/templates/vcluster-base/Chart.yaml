@@ -1,9 +1,8 @@
 apiVersion: v2
 name: vcluster
 version: 1.0.0
-description: This Chart deploys vcluster k3s by default. github.com/la-cc
-#vcluster use default k3s
+description: This Chart deploys vcluster k3s by default. 
 dependencies:
   - name: vcluster
-    version: 0.22.3
+    version: 
     repository: https://charts.loft.sh
