@@ -1,34 +1,43 @@
-vcluster:  # v0.30.4 Schema - Staying on K3s to match your existing disk
+vcluster:
   controlPlane:
+    distro:
+      k3s:
+        enabled: true
+        # serviceCIDR moved here for the virtual k3s
+        env:
+          - name: VCLUSTER_SERVICE_CIDR
+            value: "10.96.0.0/12"
     proxy:
       extraSANs:
         - "preview-env.team-alpha.workloads.example.com"
         - "192.168.44.200"
         - "192.168.44.201"
-    distro:
-      k3s:
-        enabled: true
     statefulSet:
       persistence:
         volumeClaim:
           enabled: true
           size: 5Gi
 
-  # This is the official v0.30 way to force the CIDR
+  # In newer versions, networking.serviceCIDR at the root is deprecated/removed
+  # and sync.ingresses has been restructured.
   networking:
-    serviceCIDR: "10.96.0.0/12"
+    advanced:
+      enabled: true
 
-  exportKubeConfig:
-    context: "my-vcluster-context"
+  sync:
+    fromHost:
+      ingresses:
+        enabled: true
+    toHost:
+      ingresses:
+        enabled: true
 
+  # These moved under the 'exportKubeConfig' object which is often now 
+  # handled by the CLI, but if used in Helm:
   external:
     enabled: true
 
-  sync:
-    ingresses:
-      enabled: true
-
-# Custom variables for your template
+# Custom variables (kept at top level)
 teamName: "team-alpha"
 appName: "preview-env"
 ingress:
