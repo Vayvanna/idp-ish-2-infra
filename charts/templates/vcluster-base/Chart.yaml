@@ -1,0 +1,10 @@
+apiVersion: v2
+name: vcluster-base
+description: Standard vCluster blueprint for Vayvanna IDP
+version: 0.1.0
+type: application
+
+dependencies:
+  - name: vcluster
+    version: 0.22.3
+    repository: https://charts.loft.sh

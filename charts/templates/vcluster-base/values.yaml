@@ -1,0 +1,52 @@
+# 1. Distro & Persistence 
+# In 0.22.3, k3s is under controlPlane.distro.k3s
+controlPlane:
+  distro:
+    k3s:
+      enabled: true
+  statefulSet:
+    persistence:
+      volumeClaim:
+        enabled: true
+        size: 5Gi
+
+# 2. Proxy (SANs for your internal domain)
+# This stays at the root or under networking in some versions, 
+# but per your 'show values', controlPlane.proxy is the standard.
+# However, if not in show values, check if it moved to networking.
+controlPlane:
+  proxy:
+    extraSANs:
+      - "{{ .Values.appName }}.{{ .Values.teamName }}.workloads.example.com"
+
+# 3. Sync Settings 
+# These must be at the root level, not nested under 'vcluster'
+sync:
+  fromHost:
+    nodes:
+      enabled: false
+  toHost:
+    services:
+      enabled: true
+    ingresses:
+      enabled: false
+
+# 4. Ingress (Matching your Traefik/Cert-Manager setup)
+ingress:
+  enabled: true
+  host: "{{ .Values.appName }}.{{ .Values.teamName }}.workloads.example.com"
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+    cert-manager.io/cluster-issuer: "internal-ca-issuer"
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+  spec:
+    tls:
+      - secretName: "tls-{{ .Values.appName }}-vcluster"
+        hosts:
+          - "{{ .Values.appName }}.{{ .Values.teamName }}.workloads.example.com"
+
+# 5. KubeConfig Export
+# This is usually at the root level in 0.22.x
+exportKubeConfig:
+  secret:
+    name: "vc-{{ .Release.Name }}-config"

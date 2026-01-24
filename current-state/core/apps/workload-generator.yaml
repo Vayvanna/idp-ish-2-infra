@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: workload-provisioner
+  namespace: argocd
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/Vayvanna/idp-ish-2-infra.git
+        revision: HEAD
+        # This is the magic: it looks into subfolders (one for each team)
+        files:
+          - path: "current-state/workloads/tenants-data/**/*.yaml"
+  template:
+    metadata:
+      # Naming convention: team-name-app-name
+      name: '{{teamName}}-{{appName}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/Vayvanna/idp-ish-2-infra.git
+        targetRevision: HEAD
+        # The UI will specify 'vcluster-base' or 'golden-path' in the YAML
+        path: 'charts/templates/{{chartType}}'
+        helm:
+          values: |
+            teamName: {{teamName}}
+            appName: {{appName}}
+            # Pass through any extra config the UI provided
+            {{config | toYaml | indent 12}}
+      destination:
+        name: workloads-cluster
+        # Crucial: Deploy the workload INTO the team's specific namespace
+        namespace: '{{teamName}}'
+      syncPolicy:
+        automated: { prune: true, selfHeal: true }
+        syncOptions: [CreateNamespace=false] # Namespace should already exist!
