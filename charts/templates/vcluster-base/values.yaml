@@ -1,17 +1,11 @@
 vcluster:
-  # No distro section = defaults to k0s
-  # No sync section = defaults to minimal safe syncing
-  # No proxy section = uses default internal certs
+  controlPlane:
+    statefulSet:
+      persistence:
+        volumeClaim:
+          enabled: true
+          size: 5Gi
 
-  statefulSet:
-    image:
-      repository: "loft-sh/vcluster-oss"
-      tag: "0.22.3"
-    persistence:
-      volumeClaim:
-        enabled: true
-        size: 5Gi
-
-# Keeping your custom ingress flag so your template doesn't break
+# Your custom property for your ingress.yaml template
 ingress:
   enabled: true
