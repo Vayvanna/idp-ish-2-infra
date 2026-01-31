@@ -1,0 +1,11 @@
+# this file might be either:
+#   -> straight yaml:
+#       type of resources needed + its data
+#         -> so that a CI creates full manifests(that are tiny, KubeVela Applications)
+#            and stores em in the ./manifests
+# 
+#   -> or actual tiny manifest(KubeVela) Application[s])
+resourceType: golden-path
+golden-path-id: 2 # 2 is : ns deploy backend svc ingress plus all goodies:rbac,kubeconfig,policies,resc-quotas, monitoring..
+username: dev-devid
+tenant: project-projectid1

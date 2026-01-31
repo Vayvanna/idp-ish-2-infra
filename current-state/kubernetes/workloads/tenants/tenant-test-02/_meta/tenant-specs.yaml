@@ -1,0 +1,10 @@
+# this file might be either:
+#   -> straight yaml:
+#       type of resources needed + its data
+#         -> so that a CI creates full manifests(that are tiny, KubeVela Applications)
+#            and stores em in the ./manifests
+# 
+#   -> or actual tiny manifest(KubeVela) Application[s])
+resourceType: ns
+username: dev-devid2
+tenant: project-projectid2
