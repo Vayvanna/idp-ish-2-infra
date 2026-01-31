@@ -1,43 +1,34 @@
 "tenant-ns": {
-    attributes: {}
-    type: "component"
+	type: "component"
+	description: "Provision a tenant namespace"
+	attributes: {
+		workload: type: "autodetects.core.oam.dev"
+	}
 }
 
 template: {
-    // This dummy output satisfies the 'apply-component' requirement 
-    // without triggering namespace-scoped validation dry-runs.
-    output: {
-        apiVersion: "v1"
-        kind:       "ConfigMap"
-        metadata: {
-            name:      context.name + "-setup-anchor"
-            namespace: "vela-system"
-        }
-        data: "info": "Anchor for tenant " + context.name
-    }
-    outputs: {
-        ns: {
-            apiVersion: "v1"
-            kind:       "Namespace"
-            metadata: name: context.name
-        }
-        quota: {
-            apiVersion: "v1"
-            kind:       "ResourceQuota"
-            metadata: {
-                name:      context.name + "-quota"
-                namespace: context.name
-            }
-            spec: hard: {
-                "cpu":    parameter.cpu
-                "memory": parameter.memory
-                "pods":   parameter.pods
-            }
-        }
-    }
-    parameter: {
-        cpu:    * "2" | string
-        memory: * "4Gi" | string
-        pods:   * "10" | string
-    }
+	// KubeVela MANDATES the 'output' field. 
+	// We put a tiny ServiceAccount here so it doesn't clutter 'kubectl get all'.
+	output: {
+		apiVersion: "v1"
+		kind:       "ServiceAccount"
+		metadata: {
+			name:      "anchor-sa"
+			namespace: "vela-system" // Created in a safe, existing namespace first
+		}
+	}
+
+	outputs: {
+		"tenant-namespace": {
+			apiVersion: "v1"
+			kind:       "Namespace"
+			metadata: name: context.name
+		}
+	}
+	
+	parameter: {
+		cpu:    * "2" | string
+		memory: * "4Gi" | string
+		pods:   * "10" | string
+	}
 }
