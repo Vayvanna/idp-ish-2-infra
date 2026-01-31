@@ -9,8 +9,9 @@ spec:
     repoURL: https://github.com/Vayvanna/idp-ish-2-infra
     targetRevision: HEAD
     path: current-state/kubernetes/workloads/tenants  # Point this to where your apps live
-    director:
-      recurse: true 
+    directory:
+      recurse: true
+      include: '**/root-app.yaml'
   destination:
     server: https://kubernetes.default.svc # IMPORTANT: Root app stays on Management!
     namespace: argocd
