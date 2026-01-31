@@ -1,0 +1,13 @@
+apiVersion: core.oam.dev/v1beta1
+kind: Application
+metadata:
+  name: {{ .Values.tenantName }}-setup
+  namespace: vela-system
+spec:
+  components:
+    - name: {{ .Values.tenantName }}
+      type: tenant-ns
+      properties:
+        cpu: {{ .Values.quota.cpu | quote }}
+        memory: {{ .Values.quota.memory | quote }}
+        pods: {{ .Values.quota.pods | quote }}

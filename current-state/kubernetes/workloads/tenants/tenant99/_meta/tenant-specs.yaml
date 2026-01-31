@@ -1,0 +1,8 @@
+tenantName: "tenant-99"
+vCluster: false
+golden-path: false
+quota:
+  cpu: "1"
+  memory: "1Gi"
+  pods: "10"
+# In the future, you'd add: vcluster: true, or path: "backend-gold"

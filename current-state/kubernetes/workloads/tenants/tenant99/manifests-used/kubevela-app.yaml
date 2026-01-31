@@ -1,0 +1,15 @@
+---
+# Source: tenant-app/templates/ns-app.yaml
+apiVersion: core.oam.dev/v1beta1
+kind: Application
+metadata:
+  name: tenant-99-setup
+  namespace: vela-system
+spec:
+  components:
+    - name: tenant-99
+      type: tenant-ns
+      properties:
+        cpu: "1"
+        memory: "1Gi"
+        pods: "10"

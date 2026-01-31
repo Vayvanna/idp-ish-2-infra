@@ -1,0 +1,20 @@
+---
+# Source: root-app-template/templates/root-app-template.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: root-tenant-99
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/your-repo/idp-ish-2-infra.git'
+    targetRevision: HEAD
+    path: current-state/kubernetes/workloads/tenants/tenant-99/manifests-used
+  destination:
+    name: workloads-cluster
+    namespace: tenant-99
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
