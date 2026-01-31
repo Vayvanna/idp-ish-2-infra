@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/Vayvanna/idp-ish-2-infra
     targetRevision: HEAD
-    path: current-state/kubernetes/workloads/tenants/tenant-99/manifests-used
+    path: current-state/kubernetes/workloads/tenants/tenant-99/manifests-used/*
   destination:
     server: https://kubernetes.default.svc # IMPORTANT: Root app stays on Management!
     namespace: argocd
