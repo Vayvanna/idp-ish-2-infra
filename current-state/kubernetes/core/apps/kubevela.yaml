@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kubevela-core
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://charts.kubevela.net/core
+    chart: vela-core
+    targetRevision: 1.10.6 # latest stable version
+    helm:
+      values: |
+        multicluster:
+          enabled: false
+        velaUX:
+          enabled: true
+          db:
+            type: kubeapi
+  destination:
+    # This must match the name of the cluster as defined in ArgoCD
+    name: workloads-cluster 
+    namespace: vela-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
