@@ -12,8 +12,8 @@ spec:
     targetRevision: HEAD
     path: current-state/kubernetes/workloads/tenants/tenant-99/manifests-used/
   destination:
-    server: https://kubernetes.default.svc # IMPORTANT: Root app stays on Management!
-    namespace: argocd
+    name: workloads-cluster 
+    namespace: tenant-99
   syncPolicy:
     automated:
       prune: true
