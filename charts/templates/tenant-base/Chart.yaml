@@ -1,5 +1,0 @@
-apiVersion: v2
-name: tenant-base
-description: Blueprint for team namespaces and quotas
-version: 0.1.0
-type: application

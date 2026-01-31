@@ -1,0 +1,16 @@
+# workloads/tenants/tenant-a/root-app.yaml
+# THIS FILE SHOULD BE AUTO GENERATED.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tenant-a # CHANGES AUTOMATICALLY
+  namespace: argocd
+spec:
+  source:
+    repoURL: https://github.com/Vayvanna/idp-ish-2-infra
+    targetRevision: HEAD
+    path: current-state/kubernetes/workloads/tenants/tenant-a/manifests # CHANGES AUTOMATICALLY
+  destination:
+    server: https://kubernetes.default.svc # THIS IS PROBABLY WRONG.
+    namespace: tenant-a
+

@@ -1,6 +1,0 @@
-teamName: team-alpha
-appName: preview-env
-chartType: vcluster-base
-config:
-  persistence: true
-  size: 5Gi

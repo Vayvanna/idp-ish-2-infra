@@ -1,8 +1,0 @@
-apiVersion: v2
-name: vcluster
-version: 1.0.0
-description: This Chart deploys vcluster k3s by default. 
-dependencies:
-  - name: vcluster
-    version: 
-    repository: https://charts.loft.sh

@@ -36,7 +36,7 @@ spec:
           deployNodeAgent: true
           snapshotsEnabled: false
     - repoURL: https://github.com/Vayvanna/idp-ish-2-infra
-      path: current-state/core/apps/cert-manager
+      path: current-state/kubernetes/core/apps/cert-manager
       targetRevision: HEAD
   destination:
     name: workloads-cluster

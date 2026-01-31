@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: root-workloads  # The "Parent"
+  name: cs-kubernetes-workloads
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/Vayvanna/idp-ish-2-infra
     targetRevision: HEAD
-    path: current-state/core/apps  # Point this to where your apps live
+    path: current-state/kubernetes/workloads/tenants  # Point this to where your apps live
   destination:
     server: https://kubernetes.default.svc # IMPORTANT: Root app stays on Management!
     namespace: argocd

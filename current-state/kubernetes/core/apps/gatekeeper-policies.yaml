@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/Vayvanna/idp-ish-2-infra/ # Point to your infra repo
     targetRevision: HEAD
-    path: current-state/core/apps/gatekeeper # The folder we're about to create
+    path: current-state/kubernetes/core/apps/gatekeeper # The folder we're about to create
   destination:
     name: workloads-cluster
     namespace: gatekeeper-system
