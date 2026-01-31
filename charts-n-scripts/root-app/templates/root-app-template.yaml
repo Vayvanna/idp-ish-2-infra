@@ -10,8 +10,8 @@ spec:
     targetRevision: HEAD
     path: current-state/kubernetes/workloads/tenants/{{ .Values.tenantName }}/manifests-used/kubevela-app.yaml
   destination:
-    server: https://kubernetes.default.svc # IMPORTANT: Root app stays on Management!
-    namespace: argocd
+    name: workloads-cluster # IMPORTANT: Root app stays on Management!
+    namespace: {{ .Values.tenantName }}
   syncPolicy:
     automated:
       prune: true

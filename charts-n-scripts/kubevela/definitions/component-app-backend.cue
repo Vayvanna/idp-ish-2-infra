@@ -14,7 +14,7 @@ template: {
         image:               string
         tag:                 string
         port:                *80 | int
-        host:                *"example.com" | string
+        host:                *"devopstoolkit.live" | string
         ingressClassName:    string
         db: secret:          string
         db: secretNamespace: string
