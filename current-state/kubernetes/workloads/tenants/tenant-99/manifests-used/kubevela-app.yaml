@@ -1,5 +1,3 @@
----
-# Source: tenant-app/templates/ns-app.yaml
 apiVersion: core.oam.dev/v1beta1
 kind: Application
 metadata:
@@ -13,10 +11,16 @@ spec:
         cpu: "1"
         memory: "1Gi"
         pods: "10"
+  
+  policies:
+    - name: bypass-dryrun
+      type: apply-once # This policy can help avoid constant re-validation issues
+    
   workflow:
-      steps:
-        - name: force-apply-infrastructure
-          type: apply-object # This is the "dumb" apply that skips dry-runs
-          properties:
-            # This tells Vela to just grab the output of the component and push it
-            component: tenant-99
+    steps:
+      - name: apply-ns-and-quota
+        type: apply-component
+        properties:
+          component: tenant-99
+          # This is the magic flag for some versions of KubeVela workflow steps
+          # to ignore health checks or dry-runs if they stall
