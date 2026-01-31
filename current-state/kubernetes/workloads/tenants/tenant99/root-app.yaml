@@ -8,7 +8,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/your-repo/idp-ish-2-infra.git'
+    repoURL: https://github.com/Vayvanna/idp-ish-2-infra
     targetRevision: HEAD
     path: current-state/kubernetes/workloads/tenants/tenant-99/manifests-used
   destination:
